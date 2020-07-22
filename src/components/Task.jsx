@@ -27,13 +27,13 @@ function Task(prop) {
             ...prop.provided.draggableProps.style
         }} onClick={toggleEdit}>
         <div className='color-bar' style={{backgroundColor:prop.color}}></div>
-            <h3>{prop.text}</h3>
-            <User img={prop.img} date={prop.date}></User>
+            <h3>{prop.item.content}</h3>
+            <User img={prop.item.assigned} date={prop.item.date}></User>
             
             
         </div>
         {clickedEdit?  
-            <EditScreen toggleEdit={toggleEdit} editTask={prop.editTask} id={prop.id} column={prop.column} deleteTask={prop.deleteTask}/>  
+            <EditScreen toggleEdit={toggleEdit} editTask={prop.editTask} id={prop.item.id} column={prop.column} deleteTask={prop.deleteTask}/>  
              : null } 
         </div>
     )

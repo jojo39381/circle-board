@@ -3,7 +3,7 @@ import {Draggable } from 'react-beautiful-dnd';
 import Task from './Task.jsx';
 import Add from './Add.jsx';
 import AddScreen from './AddScreen.jsx';
-import EditScreen from './EditScreen.jsx';
+
 function Column(prop) {
 
     /* click state */
@@ -32,7 +32,7 @@ function Column(prop) {
                         <Draggable key={item.id} draggableId={item.id} index={index}>
                             {(provided, snapshot) => {
                                 return (
-                                    <Task provided={provided} snapshot= {snapshot} text = {item.content} img={item.assigned} date={item.date} color={item.color} id={item.id} editTask={prop.editTask} column={prop.id} deleteTask={prop.deleteTask} />             
+                                    <Task provided={provided} snapshot= {snapshot} item={item} editTask={prop.editTask} column={prop.id} deleteTask={prop.deleteTask} />             
                                          );
                                     }}
                          </Draggable>
