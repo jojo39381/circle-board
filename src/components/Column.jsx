@@ -3,19 +3,24 @@ import {Draggable } from 'react-beautiful-dnd';
 import Task from './Task.jsx';
 import Add from './Add.jsx';
 import AddScreen from './AddScreen.jsx';
+import EditScreen from './EditScreen.jsx';
 function Column(prop) {
 
     /* click state */
-    const [clicked, setClicked] = useState(false);
+    const [clickedAdd, setClicked] = useState(false);
+    
     /* function to toggle add task screen */
     function toggleAdd() {
-        setClicked(!clicked) 
+        setClicked(!clickedAdd) 
     }
+    
     /* add task to column */
     function addTask(destination, text) {
         console.log(destination)
         prop.addToColumn(destination, text)
     }
+    
+    
     return (
         <div>
         <Add toggleAdd={toggleAdd}></Add>
@@ -27,7 +32,7 @@ function Column(prop) {
                         <Draggable key={item.id} draggableId={item.id} index={index}>
                             {(provided, snapshot) => {
                                 return (
-                                    <Task provided={provided} snapshot= {snapshot} text = {item.content} img={item.assigned} date={item.date} color={item.color} />             
+                                    <Task provided={provided} snapshot= {snapshot} text = {item.content} img={item.assigned} date={item.date} color={item.color} id={item.id} editTask={prop.editTask} column={prop.id} />             
                                          );
                                     }}
                          </Draggable>
@@ -35,9 +40,11 @@ function Column(prop) {
                     })}
             {prop.provided.placeholder}
         </div>
-            {clicked ?  
+            {clickedAdd ?  
             <AddScreen toggleAdd={toggleAdd} addTask={addTask} id={prop.id} />  
              : null } 
+             
+             
         </div>
     )
 }

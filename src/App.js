@@ -98,6 +98,23 @@ function App() {
             }
           });
     }
+    function editTask(destination, id, task) {
+        
+        const column = columns[destination]
+        console.log(column)
+        var updated = [...column.items]
+        const object = {id: uuid(), content: task.title, assigned:imageUrl + uuid(), date: task.date, color: getRandomColor()}
+        var index = updated.findIndex( x => x.id === id)   
+        updated[index] = object
+        setColumns({
+            ...columns,
+            [destination]: {
+              ...column,
+              items: updated
+            }
+          });
+    }
+    
     return (
         <div>
         <Header></Header>
@@ -111,7 +128,7 @@ function App() {
                         <Droppable droppableId={id} key={id}>
                             {(provided, snapshot) => {
                                 return (
-                                    <Column provided={provided} snapshot={snapshot} column={column} addToColumn={addToColumn} id={id}/>
+                                    <Column provided={provided} snapshot={snapshot} column={column} addToColumn={addToColumn} id={id} editTask={editTask}/>
                                 )
                             }}
                         </Droppable>
