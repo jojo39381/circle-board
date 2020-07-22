@@ -85,11 +85,17 @@ const dragEnd = (result, columns, setColumns) => {
 function App() {
     const [columns, setColumns] = useState(columnsFromServer);
     /* add to column the new task */
-    function addToColumn(destination, task) {
+    function addToColumn(destination, id, task) {
         const column = columns[destination]
         var updated = [...column.items]
         const object = {id: uuid(), content: task.title, assigned:imageUrl + uuid(), date: task.date, color: getRandomColor()}
+        if (id != null) {
+            var index = updated.findIndex( x => x.id === id)   
+            updated[index] = object
+        }
+        else {
         updated.push(object)
+        }
         setColumns({
             ...columns,
             [destination]: {
@@ -98,14 +104,11 @@ function App() {
             }
           });
     }
-    function editTask(destination, id, task) {
-        
+    function deleteFromColumn(destination, id) {
         const column = columns[destination]
-        console.log(column)
         var updated = [...column.items]
-        const object = {id: uuid(), content: task.title, assigned:imageUrl + uuid(), date: task.date, color: getRandomColor()}
-        var index = updated.findIndex( x => x.id === id)   
-        updated[index] = object
+        var index = updated.findIndex( x => x.id === id) 
+        updated.splice(index, 1)
         setColumns({
             ...columns,
             [destination]: {
@@ -128,7 +131,7 @@ function App() {
                         <Droppable droppableId={id} key={id}>
                             {(provided, snapshot) => {
                                 return (
-                                    <Column provided={provided} snapshot={snapshot} column={column} addToColumn={addToColumn} id={id} editTask={editTask}/>
+                                    <Column provided={provided} snapshot={snapshot} column={column} addToColumn={addToColumn} id={id} editTask={addToColumn} deleteTask={deleteFromColumn}/>
                                 )
                             }}
                         </Droppable>

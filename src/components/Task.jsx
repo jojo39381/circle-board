@@ -33,7 +33,7 @@ function Task(prop) {
             
         </div>
         {clickedEdit?  
-            <EditScreen toggleEdit={toggleEdit} editTask={prop.editTask} id={prop.id} column={prop.column}/>  
+            <EditScreen toggleEdit={toggleEdit} editTask={prop.editTask} id={prop.id} column={prop.column} deleteTask={prop.deleteTask}/>  
              : null } 
         </div>
     )

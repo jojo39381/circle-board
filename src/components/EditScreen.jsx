@@ -4,6 +4,9 @@ function EditScreen(prop) {
     function editTask() {
         prop.editTask(prop.column, prop.id, task)
     }
+    function deleteTask() {
+        prop.deleteTask(prop.column, prop.id)
+    }
 
     const [task, setTask] = useState({
         title: "",
@@ -36,7 +39,7 @@ function EditScreen(prop) {
         <input type="text" placeholder='Due Date...format ex: Dec 02' onChange={handleChange} value={task.date} name='date'>
 
         </input>
-        <button style={{width: '30%', border:'none', backgroundColor:'#eb3b5a', height: '30px', borderRadius:'2px', marginRight: '70px'}} onClick={editTask}>Delete</button>
+        <button style={{width: '30%', border:'none', backgroundColor:'#eb3b5a', height: '30px', borderRadius:'2px', marginRight: '70px'}} onClick={deleteTask}>Delete</button>
         <button style={{width: '30%', border:'none', backgroundColor:'#FFC312', height: '30px', borderRadius:'2px'}} onClick={editTask}>Update</button>
     </div>
     </div>

@@ -15,9 +15,9 @@ function Column(prop) {
     }
     
     /* add task to column */
-    function addTask(destination, text) {
+    function addTask(destination, id, text) {
         console.log(destination)
-        prop.addToColumn(destination, text)
+        prop.addToColumn(destination, id, text)
     }
     
     
@@ -32,7 +32,7 @@ function Column(prop) {
                         <Draggable key={item.id} draggableId={item.id} index={index}>
                             {(provided, snapshot) => {
                                 return (
-                                    <Task provided={provided} snapshot= {snapshot} text = {item.content} img={item.assigned} date={item.date} color={item.color} id={item.id} editTask={prop.editTask} column={prop.id} />             
+                                    <Task provided={provided} snapshot= {snapshot} text = {item.content} img={item.assigned} date={item.date} color={item.color} id={item.id} editTask={prop.editTask} column={prop.id} deleteTask={prop.deleteTask} />             
                                          );
                                     }}
                          </Draggable>
