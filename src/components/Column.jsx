@@ -7,19 +7,14 @@ function Column(prop) {
 
     /* click state */
     const [clicked, setClicked] = useState(false);
-    
     /* function to toggle add task screen */
     function toggleAdd() {
-        setClicked(!clicked)
-        
+        setClicked(!clicked) 
     }
     /* add task to column */
     function addTask(destination, text) {
         console.log(destination)
         prop.addToColumn(destination, text)
-        
-       
-        
     }
     return (
         <div>
