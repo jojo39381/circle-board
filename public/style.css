@@ -81,5 +81,6 @@ header {
       height: 25px;
       margin-bottom: 20px;
       display:block;
+      border-radius:5px;
   }
  

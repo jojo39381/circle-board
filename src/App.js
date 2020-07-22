@@ -5,8 +5,8 @@ import Column from './components/Column.jsx';
 import Header from './components/Header.jsx';
 /* random image */
 const imageUrl = 'https://source.unsplash.com/random/?people/';
-var months = [ "January", "February", "March", "April", "May", "June", 
-           "July", "August", "September", "October", "November", "December" ];
+var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+           "Jul", "Aug", "Sep", "Oct", "Mov", "Dec" ];
 
 function getRandomHardDate() {
     return months[Math.floor(Math.random() * 12)] + ' ' + Math.floor(Math.random() * 30 + 2)
