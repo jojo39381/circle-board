@@ -60,9 +60,7 @@ header {
     background: rgba(0, 0, 0, 0.2);
     visibility: visible;
     opacity: 1;
-    
   }
-  
   .popup .close {
     position: absolute;
     top: 20px;
