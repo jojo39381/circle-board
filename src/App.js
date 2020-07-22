@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {v4 as uuid} from 'uuid';
-import {DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import Task from './Task.jsx';
-import Column from './Column.jsx';
-import Header from './Header.jsx';
+import {DragDropContext, Droppable} from 'react-beautiful-dnd';
+import Column from './components/Column.jsx';
+import Header from './components/Header.jsx';
 
 const imageUrl = 'https://source.unsplash.com/random/?people/';
 var months = [ "January", "February", "March", "April", "May", "June", 
@@ -23,7 +22,7 @@ const itemsFromBackend = [
 ]
 const todo = [
     {id: uuid(), content: 'Do Homework', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
-    {id: uuid(), content: "Finish Project", assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
+    {id: uuid(), content: "Finish Important Project for boss", assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
 ]
 
 const columnsFromBackend = 

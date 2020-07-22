@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {Draggable } from 'react-beautiful-dnd';
 import Task from './Task.jsx';
 import Add from './Add.jsx';
 import AddScreen from './AddScreen.jsx';

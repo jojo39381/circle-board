@@ -1,5 +1,4 @@
 import React from 'react';
-import {DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import User from './User.jsx';
 function Task(prop) {
     return (

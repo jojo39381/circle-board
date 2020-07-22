@@ -28,8 +28,6 @@ body {
 }
 
 .date {
-   
-    
     text-align: center;
     width: 100px;
     margin-left:20px;
@@ -37,9 +35,10 @@ body {
     color: gray;
 }
 header {
+    
     background-color: #f5ba13;
     margin: auto -16px;
-    padding: 2px 0px;
+    padding: 1px 0px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
 

@@ -1,11 +1,10 @@
 import React from 'react';
-import {DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 
 function User(prop) {
     return (
         <div >
-        <img className='user' src={prop.img}></img>
+        <img className='user' src={prop.img} alt=""></img>
         <span className='date'>{prop.date}</span>
         
         </div>
