@@ -15,7 +15,7 @@ function getRandomHardDate() {
 function getRandomColor() {
     return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
-const itemsFromBackend = [
+const backlog = [
     {id: uuid(), content: 'Final QA', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
     {id: uuid(), content: 'Forms submit data properly', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
     {id: uuid(), content: 'Links across pages', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
@@ -25,10 +25,10 @@ const todo = [
     {id: uuid(), content: "Finish Important Project for boss", assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
 ]
 
-const columnsFromBackend = 
+const columnsFromServer = 
     {   [uuid()] : {
             name: 'Backlog',
-            items: itemsFromBackend
+            items: backlog
         },
         [uuid()]: {
             name: 'Ready To Do',
@@ -49,7 +49,7 @@ const columnsFromBackend =
 
 
 
-const onDragEnd = (result, columns, setColumns) => {
+const dragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
     const {source, destination } = result;
     if(source.droppableId !== destination.droppableId) {
@@ -73,27 +73,20 @@ const onDragEnd = (result, columns, setColumns) => {
     }
     else {
     const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
+    const copy = [...column.items];
+    const [removed] = copy.splice(source.index, 1);
+    copy.splice(destination.index, 0, removed);
     setColumns({
       ...columns,
       [source.droppableId]: {
         ...column,
-        items: copiedItems
+        items: copy
       }
     });
-}
-
-
-
-
-
+    }
 };
 function App() {
-
-
-    const [columns, setColumns] = useState(columnsFromBackend);
+    const [columns, setColumns] = useState(columnsFromServer);
     // const [clicked, setClicked] = useState(false);
     
 
@@ -126,7 +119,7 @@ function App() {
         <Header></Header>
         <div style={{ display: 'flex', justifyContent: 'center', height: '100%'}}>
            
-            <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
+            <DragDropContext onDragEnd={result => dragEnd(result, columns, setColumns)}>
                 {Object.entries(columns).map(([id, column]) => {
                     return (
                         <div style={{display:'flex', flexDirection: 'column', alignItems: 'center'}} key={uuid()}>
