@@ -4,6 +4,8 @@ import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import Column from './components/Column.jsx';
 import Header from './components/Header.jsx';
 
+
+/* random image */
 const imageUrl = 'https://source.unsplash.com/random/?people/';
 var months = [ "January", "February", "March", "April", "May", "June", 
            "July", "August", "September", "October", "November", "December" ];
@@ -25,6 +27,7 @@ const todo = [
     {id: uuid(), content: "Finish Important Project for boss", assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
 ]
 
+/* columns from the server, currently hard coded. */
 const columnsFromServer = 
     {   [uuid()] : {
             name: 'Backlog',
@@ -48,7 +51,7 @@ const columnsFromServer =
 
 
 
-
+/* function for when the drag ends, accounts for when dragging to other columns or to nowhere */
 const dragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
     const {source, destination } = result;
@@ -96,6 +99,7 @@ function App() {
         
     // }
 
+    /* add to column the new task */
     function addToColumn(destination, task) {
         const column = columns[destination]
         var updated = [...column.items]
