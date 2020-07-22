@@ -1,5 +1,7 @@
 import React from 'react';
 import User from './User.jsx';
+
+/* task component for the little task note cards */
 function Task(prop) {
     return (
         <div className='note' ref={prop.provided.innerRef}

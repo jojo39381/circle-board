@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+/* user component for the small images for each user */
 function User(prop) {
     return (
         <div >

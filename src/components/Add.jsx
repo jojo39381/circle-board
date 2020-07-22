@@ -1,4 +1,5 @@
 import React from 'react';
+/* the big add button that prompts the add task screen */
 function Add(prop) {
     return (
         <div className='note' 
