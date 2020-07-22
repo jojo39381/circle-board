@@ -7,7 +7,7 @@ function Add(prop) {
             minHeight: '50px',
             padding: 4, display:'flex', alignItems:'center', justifyContent:'center'}}>
 
-            <button style={{fontSize:'25px', border:'none', backgroundColor: 'white'}} onClick={prop.toggleAdd} >+</button>
+            <button style={{fontSize:'25px', border:'none', backgroundColor: 'white', width: '100%'}} onClick={prop.toggleAdd} >+</button>
         </div>
     )
 }

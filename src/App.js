@@ -4,27 +4,26 @@ import {DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from './Task.jsx';
 import Column from './Column.jsx';
 import Header from './Header.jsx';
-import AddScreen from './AddScreen.jsx';
+
 const imageUrl = 'https://source.unsplash.com/random/?people/';
 var months = [ "January", "February", "March", "April", "May", "June", 
            "July", "August", "September", "October", "November", "December" ];
 
 function getRandomHardDate() {
-    return months[Math.floor(Math.random() * 13)] + ' ' + Math.floor(Math.random() * 30)
+    return months[Math.floor(Math.random() * 12)] + ' ' + Math.floor(Math.random() * 30 + 2)
 }
 
 function getRandomColor() {
     return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
 const itemsFromBackend = [
-    {id: uuid(), content: 'Final QA', img:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
-    {id: uuid(), content: 'Forms submit data properly', img:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
-    {id: uuid(), content: 'Links across pages', img:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
+    {id: uuid(), content: 'Final QA', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
+    {id: uuid(), content: 'Forms submit data properly', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
+    {id: uuid(), content: 'Links across pages', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
 ]
 const todo = [
-    {id: uuid(), content: 'Final QA', img:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
-    {id: uuid(), content: 'Forms submit data properly', img:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
-    {id: uuid(), content: 'Links across pages', img:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
+    {id: uuid(), content: 'Do Homework', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
+    {id: uuid(), content: "Finish Project", assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
 ]
 
 const columnsFromBackend = 
@@ -33,7 +32,7 @@ const columnsFromBackend =
             items: itemsFromBackend
         },
         [uuid()]: {
-            name: 'To do',
+            name: 'Ready To Do',
             items: todo
         },
         [uuid()]: {
@@ -96,12 +95,32 @@ function App() {
 
 
     const [columns, setColumns] = useState(columnsFromBackend);
-    const [clicked, setClicked] = useState(false);
+    // const [clicked, setClicked] = useState(false);
+    
 
-    function toggleAdd() {
-        setClicked(true)
+    // function toggleAdd() {
+    //     console.log('lmao')
+    //     setClicked(!clicked)
         
+    // }
+
+    function addToColumn(destination, task) {
+        const column = columns[destination]
+        var updated = [...column.items]
+        const object = {id: uuid(), content: task.title, assigned:imageUrl + uuid(), date: task.date, color: getRandomColor()}
+        updated.push(object)
+
+        setColumns({
+            ...columns,
+            [destination]: {
+              ...column,
+              items: updated
+            }
+          });
+
     }
+
+   
     
     return (
         <div>
@@ -111,25 +130,27 @@ function App() {
             <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
                 {Object.entries(columns).map(([id, column]) => {
                     return (
-                        <div style={{display:'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        <div style={{display:'flex', flexDirection: 'column', alignItems: 'center'}} key={uuid()}>
                         <h2>{column.name}</h2>
                         <div style ={{margin: 8}}>
                         <Droppable droppableId={id} key={id}>
                             {(provided, snapshot) => {
                                 return (
-                                    <Column provided={provided} snapshot={snapshot} column={column} toggleAdd={toggleAdd}/>
+                                    <Column provided={provided} snapshot={snapshot} column={column} addToColumn={addToColumn} id={id}/>
+                                    
                                 )
                             }}
                         </Droppable>
+                        {/* {clicked ?  
+                        <AddScreen toggleAdd={toggleAdd} addTask={addTask} column={id}/>  
+                     : null } */}
                     </div>
                     </div>
                     )
                 })}
             </DragDropContext>
         </div>
-        {clicked ?  
-            <AddScreen />  
-            : null }      
+              
         </div>
     )
 }
