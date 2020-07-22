@@ -6,7 +6,7 @@ import Header from './components/Header.jsx';
 /* random image */
 const imageUrl = 'https://source.unsplash.com/random/?people/';
 var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-           "Jul", "Aug", "Sep", "Oct", "Mov", "Dec" ];
+           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
 function getRandomHardDate() {
     return months[Math.floor(Math.random() * 12)] + ' ' + Math.floor(Math.random() * 30 + 2)
@@ -25,7 +25,6 @@ const todo = [
     {id: uuid(), content: 'Do Homework', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
     {id: uuid(), content: "Finish Important Project for boss", assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
 ]
-
 /* columns from the server, currently hard coded. */
 const columnsFromServer = 
     {   [uuid()] : {
@@ -44,11 +43,7 @@ const columnsFromServer =
             name: 'Done',
             items:[]
         }
-
     };
-
-
-
 
 /* function for when the drag ends, accounts for when dragging to other columns or to nowhere */
 const dragEnd = (result, columns, setColumns) => {
@@ -89,22 +84,12 @@ const dragEnd = (result, columns, setColumns) => {
 };
 function App() {
     const [columns, setColumns] = useState(columnsFromServer);
-    // const [clicked, setClicked] = useState(false);
-    
-
-    // function toggleAdd() {
-    //     console.log('lmao')
-    //     setClicked(!clicked)
-        
-    // }
-
     /* add to column the new task */
     function addToColumn(destination, task) {
         const column = columns[destination]
         var updated = [...column.items]
         const object = {id: uuid(), content: task.title, assigned:imageUrl + uuid(), date: task.date, color: getRandomColor()}
         updated.push(object)
-
         setColumns({
             ...columns,
             [destination]: {
@@ -112,16 +97,11 @@ function App() {
               items: updated
             }
           });
-
     }
-
-   
-    
     return (
         <div>
         <Header></Header>
         <div style={{ display: 'flex', justifyContent: 'center', height: '100%'}}>
-           
             <DragDropContext onDragEnd={result => dragEnd(result, columns, setColumns)}>
                 {Object.entries(columns).map(([id, column]) => {
                     return (
@@ -132,21 +112,17 @@ function App() {
                             {(provided, snapshot) => {
                                 return (
                                     <Column provided={provided} snapshot={snapshot} column={column} addToColumn={addToColumn} id={id}/>
-                                    
                                 )
                             }}
                         </Droppable>
-                        {/* {clicked ?  
-                        <AddScreen toggleAdd={toggleAdd} addTask={addTask} column={id}/>  
-                     : null } */}
                     </div>
                     </div>
                     )
                 })}
             </DragDropContext>
         </div>
-              
         </div>
     )
 }
+
 export default App
