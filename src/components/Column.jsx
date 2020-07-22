@@ -20,7 +20,6 @@ function Column(prop) {
         
        
         
-        
     }
     return (
         <div>
@@ -40,7 +39,7 @@ function Column(prop) {
                          </Draggable>
                         );
                     })}
-            {prop.provided.placeholder}
+            aljs{prop.provided.placeholder}
         </div>
             {clicked ?  
             <AddScreen toggleAdd={toggleAdd} addTask={addTask} id={prop.id} />  
@@ -48,4 +47,5 @@ function Column(prop) {
         </div>
     )
 }
+
 export default Column;
