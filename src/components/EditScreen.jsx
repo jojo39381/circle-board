@@ -2,9 +2,12 @@ import React, {useState} from 'react';
 /* edit screen popup */
 function EditScreen(prop) {
 
+    /* edit task */
     function editTask() {
         prop.editTask(prop.column, prop.id, task)
     }
+
+    /* delete task */
     function deleteTask() {
         prop.deleteTask(prop.column, prop.id)
     }
@@ -14,13 +17,16 @@ function EditScreen(prop) {
         date: ""
       });
     
+      /* handle the change in the input */
       function handleChange(event) {
           
+        /* state of the input values */
         const { name, value } = event.target;
         
-        setTask(prevNote => {
+        /* sets the task */
+        setTask(prevTask => {
           return {
-            ...prevNote,
+            ...prevTask,
             [name]: value
           };
         });
