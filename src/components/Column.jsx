@@ -33,7 +33,7 @@ function Column(prop) {
                          </Draggable>
                         );
                     })}
-            aljs{prop.provided.placeholder}
+            asasdasd{prop.provided.placeholder}
         </div>
             {clicked ?  
             <AddScreen toggleAdd={toggleAdd} addTask={addTask} id={prop.id} />  
