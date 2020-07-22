@@ -3,8 +3,6 @@ import {v4 as uuid} from 'uuid';
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import Column from './components/Column.jsx';
 import Header from './components/Header.jsx';
-
-
 /* random image */
 const imageUrl = 'https://source.unsplash.com/random/?people/';
 var months = [ "January", "February", "March", "April", "May", "June", 
