@@ -84,7 +84,7 @@ const dragEnd = (result, columns, setColumns) => {
 };
 function App() {
     const [columns, setColumns] = useState(columnsFromServer);
-    /* add to column the new task */
+    /* add to column the new task or update it */
     function addToColumn(destination, id, task) {
         const column = columns[destination]
         var updated = [...column.items]
