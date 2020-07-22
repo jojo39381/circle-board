@@ -15,6 +15,7 @@ function getRandomHardDate() {
 function getRandomColor() {
     return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
+/* imageurl needs uuid/number at the end to be random so browser don't cache the image */
 const backlog = [
     {id: uuid(), content: 'Final QA', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
     {id: uuid(), content: 'Forms submit data properly', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
