@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
+
+
 function AddScreen(prop) {
 
+  
     function addTask() {
+     
         prop.addTask(prop.id, null, task)
+        
     }
 
     const [task, setTask] = useState({

@@ -1,18 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {v4 as uuid} from 'uuid';
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import Column from './components/Column.jsx';
 import Header from './components/Header.jsx';
+import axios from 'axios';
+
+
 /* random image */
 const imageUrl = 'https://source.unsplash.com/random/?people/';
 var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
 function getRandomHardDate() {
+     
     return months[Math.floor(Math.random() * 12)] + ' ' + Math.floor(Math.random() * 30 + 2)
+   
 }
 
 function getRandomColor() {
+   
     return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
 /* imageurl needs uuid/number at the end to be random so browser don't cache the image */
@@ -25,24 +31,12 @@ const todo = [
     {id: uuid(), content: 'Do Homework', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
     {id: uuid(), content: "Finish Important Project for boss", assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
 ]
+
+
 /* columns from the server, currently hard coded. */
 const columnsFromServer = 
-    {   [uuid()] : {
-            name: 'Backlog',
-            items: backlog
-        },
-        [uuid()]: {
-            name: 'Ready To Do',
-            items: todo
-        },
-        [uuid()]: {
-            name: 'In Progress',
-            items: []
-        },
-        [uuid()]: {
-            name: 'Done',
-            items:[]
-        }
+    {   
+        
     };
 
 /* function for when the drag ends, accounts for when dragging to other columns or to nowhere */
@@ -82,10 +76,50 @@ const dragEnd = (result, columns, setColumns) => {
     });
     }
 };
+
+
+
 function App() {
+
+    function getColumnData() {
+        const columnData = {
+        }
+        axios.get("http://localhost:5000/exercises")
+        .then(response => {
+            
+            if (response.data.length > 0) {
+                 response.data.forEach((task) => {
+                    
+                    setColumns({
+                        ...columns,
+                        [task.id]: {
+                            name:task.category,
+                            items: task.tasks
+                        }
+                    })
+                     
+    
+                }
+                )
+            }
+        })
+        
+    
+    }
+
+    
     const [columns, setColumns] = useState(columnsFromServer);
+    useEffect(() => {
+        getColumnData()
+      }, []);
+
+      console.log(columns)
+      
+    
+    
     /* add to column the new task or update it */
     function addToColumn(destination, id, task) {
+    
         const column = columns[destination]
         var updated = [...column.items]
         const object = {id: uuid(), content: task.title, assigned:imageUrl + uuid(), date: task.date, color: getRandomColor()}
@@ -96,6 +130,14 @@ function App() {
         else {
         updated.push(object)
         }
+        const serverColumn = {
+            id: destination,
+            category: column.name,
+            tasks: updated
+        }
+        axios.post('http://localhost:5000/exercises/add', serverColumn)
+        .then(res => console.log(res.data)) 
+
         setColumns({
             ...columns,
             [destination]: {
@@ -103,6 +145,8 @@ function App() {
               items: updated
             }
           });
+
+        
     }
     function deleteFromColumn(destination, id) {
         const column = columns[destination]
@@ -119,12 +163,15 @@ function App() {
     }
     
     return (
+        
         <div>
         <Header></Header>
         <div style={{ display: 'flex', justifyContent: 'center', height: '100%'}}>
             <DragDropContext onDragEnd={result => dragEnd(result, columns, setColumns)}>
                 {Object.entries(columns).map(([id, column]) => {
+                    console.log("columns")
                     return (
+                        
                         <div style={{display:'flex', flexDirection: 'column', alignItems: 'center'}} key={uuid()}>
                         <h2>{column.name}</h2>
                         <div style ={{margin: 8}}>

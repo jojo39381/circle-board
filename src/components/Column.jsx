@@ -5,13 +5,14 @@ import Add from './Add.jsx';
 import AddScreen from './AddScreen.jsx';
 
 function Column(prop) {
-
+    
     /* click state */
     const [clickedAdd, setClicked] = useState(false);
     
     /* function to toggle add task screen */
     function toggleAdd() {
         setClicked(!clickedAdd) 
+        
     }
     
     /* add task to column */
