@@ -77,7 +77,7 @@ function App() {
         const col = {
 
         }
-        axios.get("http://localhost:5000/exercises")
+        axios.get("/exercises")
         .then(response => {
             
             if (response.data.length > 0) {
