@@ -160,7 +160,7 @@ function App() {
             tasks:[]
         }
         
-        axios.post("http://localhost:5000/exercises/add", data)
+        axios.post("/exercises/add", data)
         .then(res => console.log(res.data))
     
     }
