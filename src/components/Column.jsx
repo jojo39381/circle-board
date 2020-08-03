@@ -5,13 +5,14 @@ import Add from './Add.jsx';
 import AddScreen from './AddScreen.jsx';
 
 function Column(prop) {
-
+    
     /* click state */
     const [clickedAdd, setClicked] = useState(false);
     
     /* function to toggle add task screen */
     function toggleAdd() {
         setClicked(!clickedAdd) 
+        
     }
     
     /* add task to column */
@@ -28,6 +29,7 @@ function Column(prop) {
         ref={prop.provided.innerRef}
         style={{background: prop.snapshot.isDraggingOver ? '#F3F4F6' : '#F3F4F6', padding: 4, width: 250, minHeight: 500}}>
             {prop.column.items.map((item, index) => {
+                    
                     return (
                         <Draggable key={item.id} draggableId={item.id} index={index}>
                             {(provided, snapshot) => {
