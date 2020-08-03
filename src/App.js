@@ -8,21 +8,48 @@ import axios from 'axios';
 
 /* random image */
 const imageUrl = 'https://source.unsplash.com/random/?people/';
-// var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-//            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
-// function getRandomHardDate() {
+function getRandomHardDate() {
      
-//     return months[Math.floor(Math.random() * 12)] + ' ' + Math.floor(Math.random() * 30 + 2)
-   
-// }
+    return months[Math.floor(Math.random() * 12)] + ' ' + Math.floor(Math.random() * 30 + 2)
+    
+}
+
+const backlog = [
+    {id: uuid(), content: 'Final QA', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
+    {id: uuid(), content: 'Forms submit data properly', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
+    {id: uuid(), content: 'Links across pages', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
+]
+const todo = [
+    {id: uuid(), content: 'Do Homework', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
+    {id: uuid(), content: "Finish Important Project for boss", assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
+]
 
 function getRandomColor() {
    
     return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
 /* imageurl needs uuid/number at the end to be random so browser don't cache the image */
-
+const columnsFromServer = 
+    {   [uuid()] : {
+            name: 'Backlog',
+            items: backlog
+        },
+        [uuid()]: {
+            name: 'Ready To Do',
+            items: todo
+        },
+        [uuid()]: {
+            name: 'In Progress',
+            items: []
+        },
+        [uuid()]: {
+            name: 'Done',
+            items:[]
+        }
+    };
 
 /* columns from the server, currently hard coded. */
 
@@ -72,32 +99,32 @@ function App() {
     
 
     
-    const [columns, setColumns] = useState({});
-    useEffect(() => {
-        const col = {
+    const [columns, setColumns] = useState(columnsFromServer);
+    // useEffect(() => {
+    //     const col = {
 
-        }
-        axios.get("/exercises")
-        .then(response => {
-            console.log(response.data.length)
-            if (response.data.length > 0) {
-                 response.data.forEach((task) => {
-                    col[task.id] = {
-                        name : task.category,
-                        items: task.tasks
-                    }
+    //     }
+    //     axios.get("/exercises")
+    //     .then(response => {
+    //         console.log(response.data.length)
+    //         if (response.data.length > 0) {
+    //              response.data.forEach((task) => {
+    //                 col[task.id] = {
+    //                     name : task.category,
+    //                     items: task.tasks
+    //                 }
                     
                      
     
-                }
-                )
-            }
+    //             }
+    //             )
+    //         }
 
-            setColumns(col)
-        })
+    //         setColumns(col)
+    //     })
 
         
-      },[]);
+    //   },[]);
         
     
       
