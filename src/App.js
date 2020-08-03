@@ -79,7 +79,7 @@ function App() {
         }
         axios.get("/exercises")
         .then(response => {
-            
+            console.log(reponse.data)
             if (response.data.length > 0) {
                  response.data.forEach((task) => {
                     col[task.id] = {
