@@ -8,36 +8,24 @@ import axios from 'axios';
 
 /* random image */
 const imageUrl = 'https://source.unsplash.com/random/?people/';
-var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+// var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+//            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
-function getRandomHardDate() {
+// function getRandomHardDate() {
      
-    return months[Math.floor(Math.random() * 12)] + ' ' + Math.floor(Math.random() * 30 + 2)
+//     return months[Math.floor(Math.random() * 12)] + ' ' + Math.floor(Math.random() * 30 + 2)
    
-}
+// }
 
 function getRandomColor() {
    
     return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
 /* imageurl needs uuid/number at the end to be random so browser don't cache the image */
-const backlog = [
-    {id: uuid(), content: 'Final QA', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
-    {id: uuid(), content: 'Forms submit data properly', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
-    {id: uuid(), content: 'Links across pages', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
-]
-const todo = [
-    {id: uuid(), content: 'Do Homework', assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()},
-    {id: uuid(), content: "Finish Important Project for boss", assigned:imageUrl + uuid(), date: getRandomHardDate(), color: getRandomColor()}
-]
 
 
 /* columns from the server, currently hard coded. */
-const columnsFromServer = 
-    {   
-        
-    };
+
 
 /* function for when the drag ends, accounts for when dragging to other columns or to nowhere */
 const dragEnd = (result, columns, setColumns) => {
@@ -81,39 +69,37 @@ const dragEnd = (result, columns, setColumns) => {
 
 function App() {
 
-    function getColumnData() {
-        const columnData = {
+    
+
+    
+    const [columns, setColumns] = useState({});
+    useEffect(() => {
+        const col = {
+
         }
         axios.get("http://localhost:5000/exercises")
         .then(response => {
             
             if (response.data.length > 0) {
                  response.data.forEach((task) => {
+                    col[task.id] = {
+                        name : task.category,
+                        items: task.tasks
+                    }
                     
-                    setColumns({
-                        ...columns,
-                        [task.id]: {
-                            name:task.category,
-                            items: task.tasks
-                        }
-                    })
                      
     
                 }
                 )
             }
+
+            setColumns(col)
         })
+
+        
+      },[]);
         
     
-    }
-
-    
-    const [columns, setColumns] = useState(columnsFromServer);
-    useEffect(() => {
-        getColumnData()
-      }, []);
-
-      console.log(columns)
       
     
     
@@ -128,15 +114,19 @@ function App() {
             updated[index] = object
         }
         else {
+           
         updated.push(object)
-        }
+
+            
         const serverColumn = {
-            id: destination,
-            category: column.name,
-            tasks: updated
+
+            tasks:updated
         }
-        axios.post('http://localhost:5000/exercises/add', serverColumn)
+        axios.post('http://localhost:5000/exercises/update/' + destination, serverColumn)
         .then(res => console.log(res.data)) 
+        }
+        
+        
 
         setColumns({
             ...columns,
@@ -161,15 +151,29 @@ function App() {
             }
           });
     }
+
+    function addColumn(){
+        
+        const data = {
+            id: uuid(),
+            category: "todo",
+            tasks:[]
+        }
+        
+        axios.post("http://localhost:5000/exercises/add", data)
+        .then(res => console.log(res.data))
+    
+    }
     
     return (
         
         <div>
         <Header></Header>
+        
         <div style={{ display: 'flex', justifyContent: 'center', height: '100%'}}>
             <DragDropContext onDragEnd={result => dragEnd(result, columns, setColumns)}>
                 {Object.entries(columns).map(([id, column]) => {
-                    console.log("columns")
+                    
                     return (
                         
                         <div style={{display:'flex', flexDirection: 'column', alignItems: 'center'}} key={uuid()}>
@@ -178,7 +182,7 @@ function App() {
                         <Droppable droppableId={id} key={id}>
                             {(provided, snapshot) => {
                                 return (
-                                    <Column provided={provided} snapshot={snapshot} column={column} addToColumn={addToColumn} id={id} editTask={addToColumn} deleteTask={deleteFromColumn}/>
+                                    <Column key={id} provided={provided} snapshot={snapshot} column={column} addToColumn={addToColumn} id={id} editTask={addToColumn} deleteTask={deleteFromColumn}/>
                                 )
                             }}
                         </Droppable>
@@ -188,6 +192,7 @@ function App() {
                 })}
             </DragDropContext>
         </div>
+        <button onClick={addColumn}>Add</button>
         </div>
     )
 }

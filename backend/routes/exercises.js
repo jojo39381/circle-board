@@ -39,18 +39,27 @@ router.route('/:id').delete((req, res) => {
 });
 
 router.route('/update/:id').post((req, res) => {
-  Exercise.findById(req.params.id)
-    .then(exercise => {
-      exercise.username = req.body.username;
-      exercise.description = req.body.description;
-      exercise.duration = Number(req.body.duration);
-      exercise.date = Date.parse(req.body.date);
+ 
+  Exercise.findOneAndUpdate({id: req.params.id}, {tasks : req.body.tasks},function(err, PC) {
+    if (err) {
+      console.log('ERROR WHILE PUT PC');
+        throw (err);
+    } else {
+        console.log('Succes set');
+        res.status(200).send(PC)
+    }
+})
 
-      exercise.save()
-        .then(() => res.json('Exercise updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
+    // .then(exercise => {
+    //   console.log(exercise)
+    //   exercise.tasks = req.body.tasks;
+
+
+    //   exercise.save()
+    //     .then(() => res.json('Exercise updated!'))
+    //     .catch(err => res.status(400).json('Error: ' + err));
+    // })
+    // .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;
