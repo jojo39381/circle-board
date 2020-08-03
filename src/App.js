@@ -122,7 +122,7 @@ function App() {
 
             tasks:updated
         }
-        axios.post('http://localhost:5000/exercises/update/' + destination, serverColumn)
+        axios.post('/exercises/update/' + destination, serverColumn)
         .then(res => console.log(res.data)) 
         }
         
